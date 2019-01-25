@@ -19,6 +19,11 @@
     <dependencies>
         <dependency>
             <groupId>com.cb</groupId>
+            <artifactId>itoken-common-domain</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cb</groupId>
             <artifactId>itoken-common-web</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
