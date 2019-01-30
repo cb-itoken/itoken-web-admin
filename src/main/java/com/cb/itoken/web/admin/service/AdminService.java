@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value = "itoken-service-amin", fallback = AdminServiceFallback.class)
+@FeignClient(value = "itoken-service-admin", fallback = AdminServiceFallback.class)
 public interface AdminService extends BaseClientService {
 
     /**
@@ -16,9 +16,9 @@ public interface AdminService extends BaseClientService {
      *
      * @return
      */
-    @RequestMapping(value = "v1/admins", method = RequestMethod.GET)
+    @RequestMapping(value = "v1/admins/{userCode}", method = RequestMethod.GET)
     public String get(
-            @RequestParam(required = true, value = "userCode") String userCode
+            @PathVariable(required = true, value = "userCode") String userCode
     );
 
     /**

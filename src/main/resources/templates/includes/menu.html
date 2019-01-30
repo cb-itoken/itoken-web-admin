@@ -9,7 +9,7 @@
     <section class="sidebar">
         <div class="user-panel">
             <div class="pull-left image">
-                <img th:src="@{{adminlte}/dist/img/user2-160x160.jpg(adminlte=${adminlte})}" class="img-circle"
+                <img th:src="@{{adminlte}/img/user2-160x160.jpg(adminlte=${adminlte})}" class="img-circle"
                      alt="User Image">
             </div>
             <div class="pull-left info">
@@ -28,26 +28,13 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="javascript:void(0);" id="btnAdminIndex" onclick="show(this.id)"><i class="fa fa-circle-o"></i> 管理员列表</a></li>
-                    <li><a href="javascript:void(0);" id="btnAdminForm" onclick="show(this.id);"><i class="fa fa-circle-o"></i> 新增管理员</a></li>
+                    <li><a href="javascript:void(0);" onclick="NthTabs.addTab('admin_list', '管理员列表', '/index');"><i class="fa fa-circle-o"></i> 管理员列表</a></li>
+                    <li><a href="javascript:void(0);" onclick="NthTabs.addTab('admin_add', '新增管理员', '/form');"><i class="fa fa-circle-o"></i> 新增管理员</a></li>
                 </ul>
             </li>
         </ul>
     </section>
 </aside>
 
-<script>
-    function show(id) {
-        var iFrame = document.getElementById("iFrame");
-
-        if (id === "btnAdminIndex") {
-            iFrame.src = "/index";
-        }
-
-        else if (id == "btnAdminForm") {
-            iFrame.src = "/form";
-        }
-    }
-</script>
 </body>
 </html>

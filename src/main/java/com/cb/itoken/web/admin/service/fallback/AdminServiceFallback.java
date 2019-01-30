@@ -10,12 +10,6 @@ import org.springframework.stereotype.Component;
 public class AdminServiceFallback implements AdminService {
     @Override
     public String get(String userCode) {
-        try {
-            String json = MapperUtils.obj2json(new TbSysUser());
-            return json;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return null;
     }
 

@@ -37,6 +37,11 @@ public class AdminController extends BaseController<TbSysUser, AdminService> {
             }
         }
 
+        // 二次确认是否为空
+        if(tbSysUser == null){
+            tbSysUser = new TbSysUser();
+        }
+
         return tbSysUser;
     }
 
@@ -80,7 +85,7 @@ public class AdminController extends BaseController<TbSysUser, AdminService> {
     public String save(
             TbSysUser tbSysUser,
             HttpServletRequest request,
-            RedirectAttributes redirectAttributes) throws Exception {
+            RedirectAttributes redirectAttributes) {
         // 初始化数据
         tbSysUser.setUserType("1");
         tbSysUser.setMgrType("1");
@@ -88,25 +93,31 @@ public class AdminController extends BaseController<TbSysUser, AdminService> {
         tbSysUser.setCorpCode("0");
         tbSysUser.setCorpName("iToken");
 
-        TbSysUser admin = (TbSysUser) request.getSession().getAttribute(WebConstants.SESSION_USER);
-        String json = adminService.save(MapperUtils.obj2json(tbSysUser), admin.getUserCode());
-        try {
-            BaseResult baseResult = MapperUtils.json2pojo(json, BaseResult.class);
-            redirectAttributes.addFlashAttribute("baseResult", baseResult);
+        String tbSysUserJson = null;
 
-            // 保存成功
-            if (baseResult.getSuccess().endsWith("成功")) {
-                return "redirect:/index";
+        try {
+            if(tbSysUser != null){
+                tbSysUserJson = MapperUtils.obj2json(tbSysUser);
             }
 
-            // 保存失败
-            else {
-                return "redirect:/form";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        TbSysUser admin = (TbSysUser) request.getSession().getAttribute(WebConstants.SESSION_USER);
+        String json = adminService.save(tbSysUserJson, admin.getUserCode());
+        BaseResult baseResult = null;
+        try {
+            baseResult = MapperUtils.json2pojo(json, BaseResult.class);
+
+            redirectAttributes.addFlashAttribute("baseResult", baseResult);
+            if(baseResult.getSuccess().endsWith("成功")){
+                return "redirect:/index";
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return null;
+        return "redirect:/form";
     }
 }

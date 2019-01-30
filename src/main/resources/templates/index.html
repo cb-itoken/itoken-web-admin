@@ -19,6 +19,14 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
+            <th:block th:if="${baseResult != null}">
+                <div class="alert alert-dismissible" th:classappend="${baseResult.result == 'ok' ? 'alert-success' : 'alert-danger'}">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+                    </button>
+                    <span th:text="${baseResult.success}"></span>
+                </div>
+            </th:block>
+
             <div class="box box-info box-info-search" style="display: none;">
                 <div class="box-header">
                     <h3 class="box-title">高级搜索</h3>
@@ -108,8 +116,8 @@
             {"data": "userCode"},
             {"data": "userName"},
             {
-                "data": function (row, type, val, meta) {
-                    return DateTime.format(row.updateDate, "yyyy-MM-dd HH:mm:ss")
+                "render": function (data, type, full, meta) {
+                    return moment(full.updateDate).format("YYYY-MM-DD HH:mm:ss");
                 }
             },
             {
